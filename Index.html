@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carlotas Delicias 🍋</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --lemon: #f5e642;
+      --lemon-dark: #d4c400;
+      --chinola: #ff6b1a;
+      --chinola-dark: #d94e00;
+      --cream: #fdf8ee;
+      --dark: #1a1208;
+      --text: #3a2a0a;
+      --soft: #f7efe0;
+      --card-shadow: 0 8px 40px rgba(60,30,0,0.13);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    header {
+      position: relative;
+      background: var(--dark);
+      overflow: hidden;
+      padding: 60px 24px 80px;
+      text-align: center;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 20% 50%, rgba(245,230,66,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 40%, rgba(255,107,26,.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .bubbles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: .07;
+      animation: float linear infinite;
+    }
+    .bubble:nth-child(1)  { width:120px;height:120px;background:var(--lemon);  left:5%;  top:10%; animation-duration:14s; }
+    .bubble:nth-child(2)  { width: 80px;height: 80px;background:var(--chinola);left:15%; top:60%; animation-duration:18s; animation-delay:-4s; }
+    .bubble:nth-child(3)  { width:160px;height:160px;background:var(--lemon);  left:70%; top:5%;  animation-duration:20s; animation-delay:-8s; }
+    .bubble:nth-child(4)  { width: 60px;height: 60px;background:var(--chinola);left:80%; top:60%; animation-duration:12s; animation-delay:-2s; }
+    .bubble:nth-child(5)  { width:100px;height:100px;background:var(--lemon);  left:45%; top:70%; animation-duration:16s; animation-delay:-6s; }
+    @keyframes float {
+      from { transform: translateY(0) rotate(0deg); }
+      to   { transform: translateY(-100vh) rotate(360deg); }
+    }
+
+    .logo-emoji { font-size: 64px; display: block; margin-bottom: 12px; animation: pop .6s cubic-bezier(.34,1.56,.64,1) both; }
+    @keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 7vw, 4.5rem);
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: -1px;
+    }
+    header h1 span.lemon   { color: var(--lemon); }
+    header h1 span.chinola { color: var(--chinola); }
+
+    header p.tagline {
+      margin-top: 14px;
+      color: rgba(255,255,255,.65);
+      font-size: 1.05rem;
+      font-weight: 300;
+      letter-spacing: .5px;
+    }
+
+    /* ── WAVE ── */
+    .wave { display:block; margin-top:-2px; }
+
+    /* ── MAIN CONTENT ── */
+    main { max-width: 760px; margin: 0 auto; padding: 0 20px 80px; }
+
+    /* ── STEP LABEL ── */
+    .step-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 44px 0 20px;
+    }
+    .step-num {
+      width: 32px; height: 32px;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: .85rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-label h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+    }
+
+    /* ── CUSTOMER FIELDS ── */
+    .fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media(max-width:500px){ .fields-grid{ grid-template-columns:1fr; } }
+
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
+    .field-group label { font-size: .8rem; font-weight: 500; text-transform: uppercase; letter-spacing: .8px; color: #7a6030; }
+    .field-group input, .field-group textarea {
+      background: #fff;
+      border: 2px solid #e8d9b8;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .97rem;
+      color: var(--dark);
+      transition: border-color .2s;
+      resize: none;
+    }
+    .field-group input:focus, .field-group textarea:focus {
+      outline: none;
+      border-color: var(--chinola);
+    }
+    .field-group.full { grid-column: 1 / -1; }
+
+    /* ── PRODUCT CARDS ── */
+    .products { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media(max-width:500px){ .products{ grid-template-columns:1fr; } }
+
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+      animation: slideUp .5s cubic-bezier(.22,1,.36,1) both;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(60,30,0,.18); }
+    @keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .card:nth-child(2){ animation-delay:.12s; }
+
+    .card-banner {
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: .35;
+    }
+    .card.lemon   .card-banner { background: linear-gradient(135deg, #f9f06b, #e8c800); }
+    .card.chinola .card-banner { background: linear-gradient(135deg, #ffb347, #ff5500); }
+
+    .card-body { padding: 20px; }
+    .card-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+    .card-body .desc { font-size: .85rem; color: #8a7040; margin-bottom: 16px; line-height: 1.4; }
+    .price-tag {
+      display: inline-block;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .card.lemon   .price-tag { background: #fef9d0; color: #7a6000; }
+    .card.chinola .price-tag { background: #fff0e8; color: #a03000; }
+
+    /* ── QUANTITY CONTROL ── */
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 2px solid #e8d9b8;
+      border-radius: 14px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .qty-btn {
+      width: 40px; height: 40px;
+      border: none;
+      background: var(--soft);
+      font-size: 1.3rem;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--dark);
+      transition: background .15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .qty-btn:hover { background: #ecd9b0; }
+    .card.lemon   .qty-btn:hover { background: #f5e97a; }
+    .card.chinola .qty-btn:hover { background: #ffcba0; }
+
+    .qty-val {
+      width: 48px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      border: none;
+      border-left: 2px solid #e8d9b8;
+      border-right: 2px solid #e8d9b8;
+      padding: 0;
+      height: 40px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--dark);
+      background: #fff;
+    }
+    .qty-val:focus { outline: none; }
+
+    /* ── ORDER SUMMARY ── */
+    .summary-box {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      padding: 24px 28px;
+      margin-top: 0;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e8d9b8;
+      font-size: .95rem;
+    }
+    .summary-row:last-of-type { border-bottom: none; }
+    .summary-row .label { color: #7a6030; }
+    .summary-row .val   { font-weight: 600; }
+    .summary-row.empty  { color: #bba870; font-style: italic; justify-content: center; padding: 16px 0; font-size: .9rem; }
+
+    /* ── ORDER BUTTON ── */
+    .btn-order {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 18px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #25d366, #128c4e);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      letter-spacing: .3px;
+      box-shadow: 0 6px 24px rgba(18,140,78,.35);
+      transition: transform .2s, box-shadow .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-order:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(18,140,78,.45); }
+    .btn-order:active { transform: translateY(0); }
+    .btn-order svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+    .btn-order:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--dark); color: #fff;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: .95rem;
+      font-weight: 500;
+      box-shadow: 0 8px 30px rgba(0,0,0,.25);
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 999;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 16px;
+      font-size: .8rem;
+      color: #b0986a;
+      border-top: 1px solid #e8d9b8;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="bubbles">
+    <div class="bubble"></div><div class="bubble"></div>
+    <div class="bubble"></div><div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+  <span class="logo-emoji">🍮</span>
+  <h1>Carlotas<br><span class="lemon">Limón</span> &amp; <span class="chinola">Chinola</span></h1>
+  <p class="tagline">Fresquitas · Cremosas · Hechas con amor 🤍</p>
+</header>
+
+<svg class="wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:var(--dark);">
+  <path d="M0 60 C360 0 1080 0 1440 60 L1440 60 L0 60 Z" fill="#fdf8ee"/>
+</svg>
+
+<main>
+
+  <!-- STEP 1: TUS DATOS -->
+  <div class="step-label">
+    <div class="step-num">1</div>
+    <h2>Tus datos</h2>
+  </div>
+
+  <div class="fields-grid">
+    <div class="field-group">
+      <label>Nombre completo</label>
+      <input type="text" id="clientName" placeholder="Ej: María García" maxlength="60"/>
+    </div>
+    <div class="field-group">
+      <label>Teléfono / WhatsApp</label>
+      <input type="tel" id="clientPhone" placeholder="Ej: 809-000-0000" maxlength="20"/>
+    </div>
+    <div class="field-group full">
+      <label>Dirección o punto de referencia</label>
+      <textarea id="clientRef" rows="2" placeholder="Ej: Sector Las Palmas, cerca de la farmacia…"></textarea>
+    </div>
+  </div>
+
+  <!-- STEP 2: ELIGE TUS CARLOTAS -->
+  <div class="step-label">
+    <div class="step-num">2</div>
+    <h2>Elige tus carlotas</h2>
+  </div>
+
+  <div class="products">
+
+    <!-- LIMÓN -->
+    <div class="card lemon">
+      <div class="card-banner">🍋</div>
+      <div class="card-body">
+        <h3>Carlota de Limón</h3>
+        <p class="desc">Cremosa, refrescante y con ese toque ácido que enamora.</p>
+        <span class="price-tag">RD$ 150 c/u</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="change('lemon',-1)">−</button>
+          <input class="qty-val" id="qty-lemon" type="number" value="0" min="0" max="99" readonly/>
+          <button class="qty-btn" onclick="change('lemon',1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHINOLA -->
+    <div class="card chinola">
+      <div class="card-banner">🌟</div>
+      <div class="card-body">
+        <h3>Carlota de Chinola</h3>
+        <p class="desc">Tropical, dulce y vibrante. El sabor del Caribe en cada cucharada.</p>
+        <span class="price-tag">RD$ 150 c/u</span>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="change('chinola',-1)">−</button>
+          <input class="qty-val" id="qty-chinola" type="number" value="0" min="0" max="99" readonly/>
+          <button class="qty-btn" onclick="change('chinola',1)">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STEP 3: TU PEDIDO -->
+  <div class="step-label" style="margin-top:44px;">
+    <div class="step-num">3</div>
+    <h2>Tu pedido</h2>
+  </div>
+
+  <div class="summary-box">
+    <div id="summaryContent">
+      <p class="summary-row empty">Agrega carlotas para ver tu resumen 🍮</p>
+    </div>
+
+    <button class="btn-order" id="btnOrder" onclick="sendOrder()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Ordenar por WhatsApp
+    </button>
+  </div>
+
+</main>
+
+<footer>
+  🍮 Carlotas Delicias — Hecho con amor en República Dominicana
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const PRICE = 150;
+  const WA_NUMBER = '18495256180';
+
+  const qty = { lemon: 0, chinola: 0 };
+
+  function change(flavor, delta) {
+    qty[flavor] = Math.max(0, Math.min(99, qty[flavor] + delta));
+    document.getElementById('qty-' + flavor).value = qty[flavor];
+    renderSummary();
+  }
+
+  function renderSummary() {
+    const total = (qty.lemon + qty.chinola) * PRICE;
+    const box = document.getElementById('summaryContent');
+
+    if (qty.lemon === 0 && qty.chinola === 0) {
+      box.innerHTML = '<p class="summary-row empty">Agrega carlotas para ver tu resumen 🍮</p>';
+      document.getElementById('btnOrder').disabled = true;
+      return;
+    }
+
+    let rows = '';
+    if (qty.lemon > 0)   rows += `<div class="summary-row"><span class="label">🍋 Limón × ${qty.lemon}</span><span class="val">RD$ ${qty.lemon * PRICE}</span></div>`;
+    if (qty.chinola > 0) rows += `<div class="summary-row"><span class="label">🌟 Chinola × ${qty.chinola}</span><span class="val">RD$ ${qty.chinola * PRICE}</span></div>`;
+    rows += `<div class="summary-row" style="font-size:1.05rem;margin-top:4px;"><span class="label" style="font-weight:700;color:var(--dark);">Total</span><span class="val" style="color:var(--chinola-dark);font-size:1.15rem;">RD$ ${total}</span></div>`;
+
+    box.innerHTML = rows;
+    document.getElementById('btnOrder').disabled = false;
+  }
+
+  function sendOrder() {
+    const name  = document.getElementById('clientName').value.trim();
+    const phone = document.getElementById('clientPhone').value.trim();
+    const ref   = document.getElementById('clientRef').value.trim();
+
+    if (!name) { showToast('⚠️ Por favor escribe tu nombre'); return; }
+    if (qty.lemon === 0 && qty.chinola === 0) { showToast('🍮 Agrega al menos una carlota'); return; }
+
+    const total = (qty.lemon + qty.chinola) * PRICE;
+
+    let msg = `🍮 *NUEVO PEDIDO DE CARLOTAS* 🍮\n\n`;
+    msg += `👤 *Nombre:* ${name}\n`;
+    if (phone) msg += `📞 *Teléfono:* ${phone}\n`;
+    if (ref)   msg += `📍 *Referencia:* ${ref}\n`;
+    msg += `\n🛒 *Pedido:*\n`;
+    if (qty.lemon   > 0) msg += `  • Carlota de Limón × ${qty.lemon} = RD$ ${qty.lemon * PRICE}\n`;
+    if (qty.chinola > 0) msg += `  • Carlota de Chinola × ${qty.chinola} = RD$ ${qty.chinola * PRICE}\n`;
+    msg += `\n💰 *Total: RD$ ${total}*\n`;
+    msg += `\n¡Gracias por tu pedido! 🤍`;
+
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+    showToast('✅ ¡Redirigiendo a WhatsApp!');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // init
+  renderSummary();
+</script>
+</body>
+</html>
